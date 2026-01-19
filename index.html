@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recipe Saver</title>
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont;
+      background: #f8f8f8;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      margin-top: 12px;
+    }
+
+    button {
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+    }
+
+    button:active {
+      opacity: 0.8;
+    }
+
+    #status {
+      text-align: center;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Save Recipe</h1>
+
+  <input
+    id="url"
+    placeholder="Paste Instagram recipe link here"
+  />
+
+  <button onclick="saveRecipe()">Save Recipe</button>
+
+  <p id="status"></p>
+
+<script>
+  const SCRIPT_URL = "PASTE_YOUR_WEB_APP_URL_HERE";
+
+  function saveRecipe() {
+    const url = document.getElementById("url").value;
+    const status = document.getElementById("status");
+
+    if (!url) {
+      status.innerText = "Please paste a link first";
+      return;
+    }
+
+    status.innerText = "Saving recipe...";
+
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify({ url })
+    })
+    .then(() => {
+      status.innerText = "Saved ✅";
+      document.getElementById("url").value = "";
+    })
+    .catch(() => {
+      status.innerText = "Something went wrong ❌";
+    });
+  }
+</script>
+</body>
+</html>
